@@ -1,15 +1,35 @@
 <h2>Data Mining Assignment 3</h2>
 <h3>Blake Bordovsky</h3>
-<script>
-    (function () {
-        var cx = '014321071304452571388:npchc9mrp7a';
-        var gcse = document.createElement('script');
-        gcse.type = 'text/javascript';
-        gcse.async = true;
-        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(gcse, s);
-    })();
-</script>
-<p>Google Search</p>
-<gcse:search></gcse:search>
+<hr class="col-sm-12" />
+<div class="row text-center">
+    <div class="col-sm-12">
+        <p>Google Search</p>
+        <gcse:search></gcse:search>
+    </div>
+    <hr class="col-sm-12" />
+    <div class="col-sm-12">
+        <p>Solr Local Search</p>
+        <input id="solr-search" type="text" placeholder="Solr Search" />
+        <button type="button" data-toggle="modal" data-target="#solr-modal">Search</button>
+    </div>
+</div>
+
+<div id="solr-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Solr Local Search Results</h4>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

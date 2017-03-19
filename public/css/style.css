@@ -1,0 +1,16 @@
+h2, h3 {
+    text-align: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+#solr-search {
+    padding: 0px;
+    border: 1px solid;
+    margin: 0px;
+    height: auto;
+    outline: none;
+    text-indent: 48px;
+}
