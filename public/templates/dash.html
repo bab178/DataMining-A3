@@ -9,8 +9,10 @@
     <hr class="col-sm-12" />
     <div class="col-sm-12">
         <p>Solr Local Search</p>
-        <input id="solr-search" type="text" placeholder="Solr Search" />
-        <button type="button" data-toggle="modal" data-target="#solr-modal">Search</button>
+        <form ng-submit="solr()">
+            <input id="solr-search" ng-model="q" type="text" placeholder="Solr Search" style="text-align: left;" />
+            <button type="submit" data-toggle="modal" data-target="#solr-modal">Search</button>
+        </form>
     </div>
 </div>
 
