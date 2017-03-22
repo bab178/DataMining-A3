@@ -9,7 +9,7 @@ angular.module('DataMiningA3', ['ui.router', 'DataMiningA3.controllers', 'DataMi
         controller: 'DashCtrl'
     })
     .state('detail', {
-        url: '/detail:id',
+        url: '/detail/:id',
         templateUrl: 'templates/detail.html',
         controller: 'DetailCtrl'
     });
