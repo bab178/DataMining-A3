@@ -12,6 +12,11 @@ angular.module('DataMiningA3', ['ui.router', 'DataMiningA3.controllers', 'DataMi
         url: '/detail/:id',
         templateUrl: 'templates/detail.html',
         controller: 'DetailCtrl'
+    })
+    .state('results', {
+        url: '/results/:query',
+        templateUrl: 'templates/results.html',
+        controller: 'ResultsCtrl'
     });
     
     // Route not found go to /dashboard

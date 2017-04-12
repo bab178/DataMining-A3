@@ -1,0 +1,15 @@
+<span ng-if="loading">
+    <h2>Loading...</h2>
+</span>
+<span ng-if="!loading">
+    <h4>Solr Local Search Results</h4>
+    Top {{ results.length }} of  {{ numFound }}<span style='float: right;'>Relevant?</span>
+    <div ng-repeat="result in results">
+        <div style='width: 100%;'> 
+            <a href='/#!/detail/{{ result.id }}'>{{ result.Song[0] }} ({{ result.Year[0] }})
+            <br/>by {{ capitalizeAll(result.Artist[0]) }}</a>
+            <input type='checkbox' style='float: right;' value='{{ result.id }}'/>
+            <hr style='margin:5px 0px 5px 0px;'/>
+        </div>
+    </div>
+</span>

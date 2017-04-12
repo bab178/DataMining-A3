@@ -1,29 +1,18 @@
-<h2>Data Mining Assignment 3</h2>
+<h2>Data Mining Project: Relevance Feedback</h2>
 <h3>Blake Bordovsky</h3>
 <hr class="col-sm-12" />
 <div class="row text-center">
     <div class="col-sm-12">
-        <p>Solr Local Search</p>
         <form ng-submit="solr()">
-            <input id="solr-search" ng-model="q" type="text" placeholder="Solr Search" style="text-align: left;" />
-            <button type="submit" data-target="#solr-modal">Search</button>
+            <div class="form-group">
+                <div class="col-sm-10 col-xs-12">
+                    <input class="form-control" ng-model="q" type="text" placeholder="Solr Search" />
+                </div>
+                <div class="col-xs-12 hidden-md hidden-lg">
+                    <button class="btn btn-primary col-xs-12" type="submit">Search</button>
+                </div>
+                <button class="btn btn-primary hidden-xs hidden-sm col-sm-2" type="submit">Search</button>
+            </div>
         </form>
     </div>
-</div>
-
-<div id="solr-modal" class="modal fade" role="dialog">
-    <form ng-submit="rerank()">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Re-Rank</button>            
-                </div>
-            </div>
-        </div>
-    </form>
 </div>
