@@ -2,7 +2,9 @@ angular.module('DataMiningA3.controllers', [])
 .controller('DashCtrl', function ($scope, $state, SolrService) {
     $scope.q = "";
     $scope.solr = function() {
-        $state.go('results', $scope.q);
+        if($scope.q != "") {
+            $state.go('results', { query: $scope.q });
+        }
     }
 })
 .controller('DetailCtrl', function ($scope, $state, $stateParams, SolrService) {
