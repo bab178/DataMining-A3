@@ -41,10 +41,46 @@ angular.module('DataMiningA3.controllers', [])
 .controller('ResultsCtrl', function ($scope, $state, $stateParams, SolrService) {
     $scope.results = {};
     $scope.loading = true;
+    $scope.selection = [];
     $scope.capitalizeAll = function (s) {
         s = s.toString();
-        return s.charAt(0).toUpperCase() + s.slice(1);
-    }
+        return s.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();})
+        .replace("And", "and")
+        .replace("Featuring", "featuring")
+        .replace("Feat", "feat");
+    };
+
+    $scope.toggleSelection = function toggleSelection(id) {
+        var idx = $scope.selection.indexOf(id);
+        var $allboxes = $('input[type="checkbox"]');
+        
+        if (idx > -1) { // Is currently selected
+            $scope.selection.splice(idx, 1);
+        }
+        else { // Is newly selected
+            $scope.selection.push(id);
+        }
+
+        if($scope.selection.length < 5) {
+            // enable all
+            $allboxes.each(function(index) {
+                $allboxes[index].disabled = false;
+            }, this);
+        }
+        else {
+            // disable other than selected
+            $allboxes.each(function(index) {
+                var id = $allboxes[index].value;
+                if($scope.selection.indexOf(id) == -1) {
+                    $allboxes[index].disabled = true;
+                }    
+            }, this);
+        }
+    };
+
+    $scope.relevancefeedback =function() {
+      console.log($scope.selection);  
+    };
 
     if ($stateParams.query != "") {
         SolrService.Search($stateParams.query)
