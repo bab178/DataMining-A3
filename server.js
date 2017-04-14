@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+var sw = require('stopword');
 var app = express();
 var port = process.env.PORT || 8000;
 
@@ -27,6 +28,10 @@ app.use(function (req, res, next) {
 
     // Pass to next layer of middleware
     next();
+});
+
+app.get('/removeStopwords', function(req, res) {
+    res.send(sw.removeStopwords(req.query.stopwords.split(' ')));
 });
 
 app.listen(port);

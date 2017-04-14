@@ -41,9 +41,27 @@ angular.module('DataMiningA3.controllers', [])
     });
 })
 .controller('ResultsCtrl', function ($scope, $state, $stateParams, SolrService) {
-    $scope.results = {};
     $scope.loading = true;
+    $scope.results = {};
     $scope.selection = [];
+
+    if ($stateParams.query != "") {
+        SolrService.Search($stateParams.query)
+        .done(function(data) {
+            // Sort results by Rank
+            $scope.results = data.response.docs.sort(function (a, b) { return a.Rank[0] > b.Rank[0] });
+            $scope.numFound = data.response.numFound;
+            $scope.loading = false;
+            $scope.$apply();
+        })
+        .fail(function (err) {
+             alert("Error code: " + err.status + "\nMessage: " + err.statusText); 
+        });
+    }
+    else {
+        $state.go('dash');
+    }
+
     $scope.capitalizeAll = function (s) {
         s = s.toString();
         return s.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();})
@@ -51,6 +69,11 @@ angular.module('DataMiningA3.controllers', [])
         .replace("Featuring", "featuring")
         .replace("Feat", "feat");
     };
+
+    $scope.getSnippet = function(s) {
+        s = s.toString();
+        return s.substr(0, 100) + "...";
+    }
 
     $scope.toggleSelection = function toggleSelection(id) {
         var idx = $scope.selection.indexOf(id);
@@ -80,24 +103,30 @@ angular.module('DataMiningA3.controllers', [])
         }
     };
 
-    $scope.relevancefeedback =function() {
-      console.log($scope.selection);  
-    };
+    $scope.relevancefeedback = function() {
+        $scope.loading = true;
 
-    if ($stateParams.query != "") {
-        SolrService.Search($stateParams.query)
-        .done(function(data) {
-            // Sort results by Rank
-            $scope.results = data.response.docs.sort(function (a, b) { return a.Rank[0] > b.Rank[0] });
-            $scope.numFound = data.response.numFound;
-            $scope.loading = false;
-            $scope.$apply();
-        })
-        .fail(function (err) {
-             alert("Error code: " + err.status + "\nMessage: " + err.statusText); 
+        var fq = "";
+        $scope.selection.forEach(function(info) {
+            fq += info + " ";
+        }, this);
+
+        jQuery.get('/removeStopwords?stopwords='+fq)
+        .done(function(words){
+            SolrService.RelevanceFeedback(words)
+            .done(function(data) {
+                // Sort results by Rank
+                $scope.results = data.response.docs.sort(function (a, b) { return a.score < b.score });
+                $scope.numFound = data.response.numFound;
+                $scope.selection = []; 
+                $scope.reranked = true;
+                $scope.loading = false;
+                $scope.$apply();
+            })
+            .fail(function (err) {
+                alert("Error code: " + err.status + "\nMessage: " + err.statusText); 
+                $scope.loading = false; 
+            });
         });
-    }
-    else {
-        $state.go('dash');
-    }
+    };
 });
